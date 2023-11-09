@@ -20,7 +20,7 @@ public class DataHelper {
     }
 
     public static int generateRandomYear() {
-        return faker.random().nextInt(3000 - 1900 + 1) + 1900;
+        return faker.random().nextInt((3000 - 1900 + 1) + 1900);
     }
 
     public static String generateRandomNameHolderCard() {
