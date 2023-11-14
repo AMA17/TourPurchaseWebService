@@ -8,11 +8,11 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class PaymentGate {
     // инициализировал элементы на странице
-    private final SelenideElement numberCard = $(byText("Номер карты"));
-    private final SelenideElement month = $(byText("Месяц"));
-    private final SelenideElement year = $(byText("Год"));
-    private final SelenideElement holderCard = $(byText("Владелец"));
-    private final SelenideElement code = $(byText("CVC/CVV"));
+    private final SelenideElement numberCard = $("class='input__top'>Номер карты<");
+    private final SelenideElement month = $("class='input__top'>Месяц<");
+    private final SelenideElement year = $("class='input__top'>Год<");
+    private final SelenideElement holderCard = $("class='input__top'>Владелец<");
+    private final SelenideElement code = $("div.form-field form-field_size_m form-field_theme_alfa-on-white").find("input[class='input__control']");
     private final SelenideElement loginButton = $(byText("Продолжить"));
     private final SelenideElement buy = $(byText("Купить"));
 
