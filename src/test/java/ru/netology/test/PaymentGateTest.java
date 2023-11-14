@@ -49,6 +49,7 @@ public class PaymentGateTest {
     void InTest() {
         $(byText("Купить")).click();
         $("input.input__control").setValue(String.valueOf(DataHelper.generateRandomNumberCard()));
+        $("input[value'']").parent("div class='form-field form-field_size_m form-field_theme_alfa-on-white'").setValue(String.valueOf(DataHelper.generateRandomMonth()));;
         $(byText("Продолжить")).click();
         $(withText("Ошибка")).shouldBe(visible, Duration.ofSeconds(7));
     }
