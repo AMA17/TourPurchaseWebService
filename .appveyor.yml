@@ -12,7 +12,7 @@ install:
   # запускаем SUT (& означает, что в фоновом режиме не блокируем терминал для запуска тестов)
   - docker-compose up -d
   - sleep 30
-  - java -jar ./artifacts/app-deadline.jar &
+  - java -jar ./artifacts/aqa-shop.jar &
   - chmod +x gradlew
 
 build_script:

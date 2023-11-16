@@ -3,68 +3,49 @@ package ru.netology.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
-import ru.netology.page.PaymentGate;
-
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 
 public class PaymentGateTest {
-    PaymentGate paymentGate; //инициализировал страницу
 
     @BeforeEach
     void setup() {
         open("http://localhost:8080"); // открыл порт
     }
 
-   // @Test
-    //void validInputTest() {  // 1 способ - падает на строке №23 (наверное неправильно привязал поля)
-       // $(byText("Купить")).click();  // нажал купить
-       // var authInfo = DataHelper.generateRandomCard(); // инициализировал authInfo и взял рандомные данные
-       // paymentGate.validCard(authInfo);  // на стр paymentGate заполнил данные
-       // $(byText("Продолжить")).click();
-       // Duration.ofSeconds(15);// нажал продолжить
-    //}
-
-   // @Test
-        // Этот тест проходит, но не видно чтобы он подставлял данные (наверное неправильно привязал поля)
-   // void InputTest() {
-      //  $(byText("Купить")).click();
-     //   var numberCard = DataHelper.generateRandomNumberCard();
-      //  var year = DataHelper.generateRandomYear();
-      //  var holderCard = DataHelper.generateRandomNameHolderCard();
-      //  var code = DataHelper.generatorRandomCode();
-     //   Duration.ofSeconds(15);
-     //   $(byText("Продолжить")).click();
-    //}
-
     @Test
-    void InTest() {
+    void validDataTest() {
         $(byText("Купить")).click();
-        $("input.input__control").setValue(String.valueOf(DataHelper.generateRandomNumberCard()));
-        $("input[value'']").parent("div class='form-field form-field_size_m form-field_theme_alfa-on-white'").setValue(String.valueOf(DataHelper.generateRandomMonth()));;
+        $(byText("Номер карты")).parent().$("input").setValue(String.valueOf(DataHelper.generateValidRandomNumberCard()));
+        $(byText("Месяц")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomMonth()));
+        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomYear()));
+        $(byText("Владелец")).parent().$("input").setValue(DataHelper.generateRandomNameHolderCard());
+        $(byText("CVC/CVV")).parent().$("input").setValue(String.valueOf(DataHelper.generatorRandomCode()));
         $(byText("Продолжить")).click();
-        $(withText("Ошибка")).shouldBe(visible, Duration.ofSeconds(7));
+        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void invalidDataTest() {
+        $(byText("Купить")).click();
+        $(byText("Номер карты")).parent().$("input").setValue(String.valueOf(DataHelper.invalidNumberCard()));
+        $(byText("Месяц")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomMonth()));
+        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomYear()));
+        $(byText("Владелец")).parent().$("input").setValue(DataHelper.generateRandomNameHolderCard());
+        $(byText("CVC/CVV")).parent().$("input").setValue(String.valueOf(DataHelper.generatorRandomCode()));
+        $(byText("Продолжить")).click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void emptyFieldsTest() {
+        $(byText("Купить")).click();
+        $(byText("Продолжить")).click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
 
 
-        //@Test
-        //void validLoginTest() {
-        //   $(byText("Купить")).click();
-        //   $("class='input__top'>Номер карты<").setValue(DataHelper.generateRandomNumberCard());
-        //   $("class='input__top'>Месяц<").setValue(String.valueOf(DataHelper.generateRandomMonth()));
-        //   $("class='input__top'>Год<").setValue(String.valueOf(DataHelper.generateRandomYear()));
-        //   $("class='input__top'>Владелец<").setValue(DataHelper.generateRandomNameHolderCard());
-        //   $("class='input__top'>CVC/CVV<").setValue(String.valueOf(DataHelper.generatorRandomCode()));
-        //   $(byText("Продолжить")).click();
-        //}
-
-
-    }
+}
