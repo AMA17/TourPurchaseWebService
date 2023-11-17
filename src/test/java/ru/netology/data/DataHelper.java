@@ -19,25 +19,28 @@ public class DataHelper {
     }
 
     public static String invalidNumberCard() {
-        return null;
+        String invalidNumberCard = faker.numerify("#### ####");
+        return invalidNumberCard;
     }
 
     public static String generateRandomMonth() {
-        int number = faker.number().numberBetween(1, 11);
+        int number = faker.number().numberBetween(1, 12);
         String formattedNumber = String.format("%02d", number);
         return formattedNumber;
     }
 
     public static int generateRandomYear() {  // метод рандомного года
-        return faker.random().nextInt(23, 28);
+        return faker.random().nextInt(23, 99);
     }
 
     public static String generateRandomNameHolderCard() {  // метод рандомного владельца карты
         return faker.name().fullName();
     }
 
-    public static int generatorRandomCode() {  // метод рандомного кода CVC/CVV
-        return faker.number().numberBetween(100, 999);
+    public static String generatorRandomCode() {  // метод рандомного кода CVC/CVV
+        int number = faker.number().numberBetween(1, 999);
+        String formatNumber = String.format("%03d", number);
+        return formatNumber;
     }
 
     public static AuthInfo generateRandomCard() {  // метод который принимает рандомные данные для карты
@@ -51,6 +54,6 @@ public class DataHelper {
         String month;
         int year;
         String holderCard;
-        int code;
+        String code;
     }
 }
