@@ -11,7 +11,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-
+import static ru.netology.data.DataHelper.*;
 
 
 public class PaymentGateTest {
@@ -27,6 +27,9 @@ public class PaymentGateTest {
     void validDataTest() {
         //var authinfo = DataHelper.generateRandomCard();
         paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
+        //paymentGate.vc("4444 4444 4444 44444", "05", "25", "Petr Van", "654")
+        //paymentGate.vc(generateValidRandomNumberCard(),generateRandomMonth(), generateRandomYear(),
+                //generateRandomNameHolderCard(), generatorRandomCode());
         $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
     }
     //@Test

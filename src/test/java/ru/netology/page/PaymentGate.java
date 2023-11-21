@@ -36,4 +36,13 @@ public class PaymentGate {
         loginButton.click();
         return new PaymentGate();
     }
+
+    public void vc(String number, String month, int year, String holder, String code) {
+        buy.click();
+        numberCardField.sendKeys(number);
+        monthField.setValue(month);
+        yearField.setValue(String.valueOf(year));
+        holderCardField.setValue(holder);
+        codeField.setValue(code);
+    }
 }
