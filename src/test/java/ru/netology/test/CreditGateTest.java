@@ -22,7 +22,7 @@ public class CreditGateTest {
         $(byText("Купить в кредит")).click();
         $(byText("Номер карты")).parent().$("input").setValue(String.valueOf(DataHelper.generateValidRandomNumberCard()));
         $(byText("Месяц")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomMonth()));
-        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomYear()));
+        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.getCurrentDatePlusOneYear()));
         $(byText("Владелец")).parent().$("input").setValue(DataHelper.generateRandomNameHolderCard());
         $(byText("CVC/CVV")).parent().$("input").setValue(String.valueOf(DataHelper.generatorRandomCode()));
         $(byText("Продолжить")).click();
@@ -33,7 +33,7 @@ public class CreditGateTest {
         $(byText("Купить в кредит")).click();
         $(byText("Номер карты")).parent().$("input").setValue(String.valueOf(DataHelper.invalidNumberCard()));
         $(byText("Месяц")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomMonth()));
-        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomYear()));
+        $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.getCurrentDatePlusOneYear()));
         $(byText("Владелец")).parent().$("input").setValue(DataHelper.generateRandomNameHolderCard());
         $(byText("CVC/CVV")).parent().$("input").setValue(String.valueOf(DataHelper.generatorRandomCode()));
         $(byText("Продолжить")).click();

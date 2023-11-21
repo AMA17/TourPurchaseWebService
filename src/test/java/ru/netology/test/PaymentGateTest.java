@@ -7,6 +7,7 @@ import ru.netology.data.DataHelper;
 import ru.netology.page.PaymentGate;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -24,31 +25,60 @@ public class PaymentGateTest {
     }
 
     @Test
-    void validDataTest() {
-        //var authinfo = DataHelper.generateRandomCard();
-        //paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
+    void validDataTest() { // валидные значения
+        paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
         //paymentGate.vc("4444 4444 4444 44444", "05", "24", "Petr Van", "654");
-        paymentGate.vc(generateValidRandomNumberCard(),generateRandomMonth(), generateRandomYear(),
-                generateRandomNameHolderCard(), generatorRandomCode());
+        //paymentGate.vc(generateValidRandomNumberCard(),generateRandomMonth(), generateRandomYear(),
+        //generateRandomNameHolderCard(), generatorRandomCode());
         $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
     }
-    //@Test
-   // void invalidDataTest() {
-       // $(byText("Купить")).click();
-      //  $(byText("Номер карты")).parent().$("input").setValue(String.valueOf(DataHelper.invalidNumberCard()));
-       // $(byText("Месяц")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomMonth()));
-       // $(byText("Год")).parent().$("input").setValue(String.valueOf(DataHelper.generateRandomYear()));
-      //  $(byText("Владелец")).parent().$("input").setValue(DataHelper.generateRandomNameHolderCard());
-       // $(byText("CVC/CVV")).parent().$("input").setValue(String.valueOf(DataHelper.generatorRandomCode()));
-       // $(byText("Продолжить")).click();
-       // $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
-   // }
-    //@Test
-    //void emptyFieldsTest() {
-       // $(byText("Купить")).click();
-       // $(byText("Продолжить")).click();
-       // $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
-    //}
+    @Test
+    void dataTest() {
+        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "33",
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+
+    @Test
+    void invalidDataTest() {  // невалидное значение
+        paymentGate.invalidCard();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void emptyFieldsTest() {  // незаполненные поля
+    paymentGate.vc();
+    $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+
+    @Test
+    void numberCardLatTest() { // номер карты латиницей
+        paymentGate.vc("number", generateRandomMonth(), getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void monthCardLatTest() { // месяц карты латиницей
+        paymentGate.vc(generateValidRandomNumberCard(), "number", getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void yearCardLatTest() { // год карты латиницей
+        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "number",
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void holderCardLatTest() { // владелец карты латиницей
+        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+                "Petr Van", generatorRandomCode());
+        paymentGate.loginButton.click();
+        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+    }
 
 
 }

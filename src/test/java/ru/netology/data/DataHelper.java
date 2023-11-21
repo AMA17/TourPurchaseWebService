@@ -3,6 +3,8 @@ package ru.netology.data;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 
@@ -29,8 +31,14 @@ public class DataHelper {
         return formattedNumber;
     }
 
-    public static int generateRandomYear() {  // метод рандомного года
-        return faker.random().nextInt(23, 99);
+    //public static int generateRandomYear() {  // метод рандомного года
+     //   return faker.random().nextInt(23, 99);
+    //}
+    public static String getCurrentDatePlusOneYear() {
+        LocalDate currentDate = LocalDate.now(); // Получаем текущую дату + год
+        LocalDate futureDate = currentDate.plusYears(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy");
+        return futureDate.format(formatter);
     }
 
     public static String generateRandomNameHolderCard() {  // метод рандомного владельца карты
@@ -44,7 +52,7 @@ public class DataHelper {
     }
 
     public static AuthInfo generateRandomCard() {  // метод который принимает рандомные данные для карты
-        return new AuthInfo(generateValidRandomNumberCard(), generateRandomMonth(), generateRandomYear(),
+        return new AuthInfo(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
     }
 
@@ -52,7 +60,7 @@ public class DataHelper {
     public static class AuthInfo {  // метод который возвращает рандомные данные
         String numberCard;
         String month;
-        int year;
+        String year;
         String holderCard;
         String code;
     }
