@@ -4,7 +4,6 @@ HELP.md
 .gradle
 build/
 
-
 ### STS ###
 .apt_generated
 .classpath
@@ -20,6 +19,7 @@ build/
 *.iml
 *.ipr
 out/
+data/
 
 ### NetBeans ###
 /nbproject/private/
@@ -44,5 +44,3 @@ out/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
-
