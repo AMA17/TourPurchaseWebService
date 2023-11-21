@@ -16,7 +16,7 @@ import static ru.netology.data.DataHelper.*;
 
 public class PaymentGateTest {
 
-    PaymentGate paymentGate; //Инициализировал страницу PaymentGate
+    PaymentGate paymentGate = new PaymentGate(); //Инициализировал страницу PaymentGate
 
     @BeforeEach
     void setup() {
@@ -26,10 +26,10 @@ public class PaymentGateTest {
     @Test
     void validDataTest() {
         //var authinfo = DataHelper.generateRandomCard();
-        paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
-        //paymentGate.vc("4444 4444 4444 44444", "05", "25", "Petr Van", "654")
-        //paymentGate.vc(generateValidRandomNumberCard(),generateRandomMonth(), generateRandomYear(),
-                //generateRandomNameHolderCard(), generatorRandomCode());
+        //paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
+        //paymentGate.vc("4444 4444 4444 44444", "05", "24", "Petr Van", "654");
+        paymentGate.vc(generateValidRandomNumberCard(),generateRandomMonth(), generateRandomYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
         $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
     }
     //@Test
