@@ -26,13 +26,17 @@ public class DataHelper {
     }
 
     public static String generateRandomMonth() {
-        int number = faker.number().numberBetween(1, 12);
-        String formattedNumber = String.format("%02d", number);
-        return formattedNumber;
+        //int number = faker.number().numberBetween(1, 12);
+        //String formattedNumber = String.format("%02d", number);
+        //return formattedNumber;
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusMonths(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
+        return futureDate.format(formatter);
     }
 
     //public static int generateRandomYear() {  // метод рандомного года
-     //   return faker.random().nextInt(23, 99);
+    //   return faker.random().nextInt(23, 99);
     //}
     public static String getCurrentDatePlusOneYear() {
         LocalDate currentDate = LocalDate.now(); // Получаем текущую дату + год
