@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ru.netology.data.DataHelper;
+import ru.netology.data.SQLHelper;
 import ru.netology.page.PaymentGate;
 
 import java.time.Duration;
@@ -203,6 +204,10 @@ public class PaymentGateTest {
                 generateRandomNameHolderCard(), "&^%&()");
         paymentGate.loginButton.click();
         $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+    @Test
+    void TransactionId() {
+        SQLHelper.getTransactionId();
     }
 
 }

@@ -23,7 +23,7 @@ public class PaymentGate {
         buy.click();          // инициализировал поля и заполнил данными
         numberCardField.setValue(DataHelper.generateValidRandomNumberCard());
         monthField.setValue(DataHelper.generateRandomMonth());
-        yearField.setValue(String.valueOf(DataHelper.getCurrentDatePlusOneYear()));
+        yearField.setValue(DataHelper.getCurrentDatePlusOneYear());
         holderCardField.setValue(DataHelper.generateRandomNameHolderCard());
         codeField.setValue(DataHelper.generatorRandomCode());
         loginButton.click();

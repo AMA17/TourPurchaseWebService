@@ -68,4 +68,8 @@ public class DataHelper {
         String holderCard;
         String code;
     }
+    @Value
+    public static class TransactionId {
+        String id;
+    }
 }
