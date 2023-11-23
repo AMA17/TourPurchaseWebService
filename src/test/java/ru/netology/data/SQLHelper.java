@@ -19,9 +19,10 @@ public class SQLHelper {
     }
     @SneakyThrows
     public static DataHelper.TransactionId getTransactionId() {
-        var codeSQL = "SELECT transaction_id  FROM payment_entity pe LIMIT 1";
-        var conn = getConn();
-        var code = runner.query(conn, codeSQL, new ScalarHandler<String>());
-        return new DataHelper.TransactionId(code);
+        var codeSQL = "SELECT transaction_id  FROM payment_entity pe LIMIT 1"; // передаем запрос в БД
+        var conn = getConn();                                                  // в переменную помещаем подключение (метод getConn)
+        var code = runner.query(conn, codeSQL, new ScalarHandler<String>());   // runner выполняет подключение, передает код, возвращает строчное значение
+        return new DataHelper.TransactionId(code);                             // возвращает строку
     }
+
 }

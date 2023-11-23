@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import ru.netology.data.SQLHelper;
 import ru.netology.page.PaymentGate;
 
 import java.time.Duration;
@@ -87,7 +88,7 @@ public class CreditGateTest {
         paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), "number");
         paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
 
     @Test
@@ -201,5 +202,10 @@ public class CreditGateTest {
         paymentGate.loginButton.click();
         $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
+    @Test
+    void TransactionId() {
+        SQLHelper.getTransactionId();
+    }
+
 
 }

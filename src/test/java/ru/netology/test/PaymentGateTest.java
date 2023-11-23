@@ -91,7 +91,7 @@ public class PaymentGateTest {
         paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), "number");
         paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
 
     @Test
