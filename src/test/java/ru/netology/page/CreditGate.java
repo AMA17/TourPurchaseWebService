@@ -3,8 +3,10 @@ package ru.netology.page;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -19,7 +21,7 @@ public class CreditGate {
     public final SelenideElement loginButton = $(byText("Продолжить"));
     private final SelenideElement buy = $(byText("Купить в кредит"));
 
-    public void validCard() { // метод заполнения валидных данных
+    public void fillFormWithValidData() { // метод заполнения валидных данных
         buy.click();          // инициализировал поля и заполнил данными
         numberCardField.setValue(DataHelper.generateValidRandomNumberCard());
         monthField.setValue(DataHelper.generateRandomMonth());
@@ -29,7 +31,7 @@ public class CreditGate {
         loginButton.click();
     }
 
-    public void invalidCard() { // метод невалидных данных
+    public void fillFormWithInvalidData() { // метод невалидных данных
         buy.click();
         numberCardField.setValue(DataHelper.invalidNumberCard());
         monthField.setValue(DataHelper.generateRandomMonth());
@@ -39,7 +41,7 @@ public class CreditGate {
         loginButton.click();
     }
 
-    public void vc(String number, String month, String year, String holder, String code) { // Метод для подсановки значений в поля
+    public void fillSubstitutingValuesIntoFields(String number, String month, String year, String holder, String code) { // Метод для подсановки значений в поля
         buy.click();
         numberCardField.sendKeys(number);
         monthField.setValue(month);
@@ -48,8 +50,16 @@ public class CreditGate {
         codeField.setValue(code);
     }
 
-    public void vc() { // Метод для незаполненных полей
+    public void fillBlankFields() { // Метод для незаполненных полей
         buy.click();
         loginButton.click();
+    }
+
+    public void textSuccessfullySees() {  // метод видит текст "Успешно"
+        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+
+    public void textIncorrectFormatSees() {
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
 }

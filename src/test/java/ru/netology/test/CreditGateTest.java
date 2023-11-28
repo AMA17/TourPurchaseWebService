@@ -3,22 +3,16 @@ package ru.netology.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import ru.netology.data.SQLHelper;
-import ru.netology.page.PaymentGate;
+import ru.netology.page.CreditGate;
 
-import java.time.Duration;
-
-
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static ru.netology.data.DataHelper.*;
 
 
 public class CreditGateTest {
 
-    PaymentGate paymentGate = new PaymentGate(); //Инициализировал страницу PaymentGate
+    CreditGate creditGate = new CreditGate(); //Инициализировал страницу PaymentGate
 
     @BeforeEach
     void setup() {
@@ -27,184 +21,189 @@ public class CreditGateTest {
 
     @Test
     void validDataTest() { // валидные значения
-        paymentGate.validCard();   //прошу выполнить метод validCard, который на странице PaymentGate
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.fillFormWithValidData();   //прошу выполнить метод validCard, который на странице PaymentGate
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void dataTest() {
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "33",
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), "33",
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void invalidDataTest() {  // невалидное значение
-        paymentGate.invalidCard();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.fillFormWithInvalidData();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void emptyFieldsTest() {  // незаполненные поля
-        paymentGate.vc();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.fillBlankFields();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void numberCardLatTest() { // номер карты латиницей
-        paymentGate.vc("number", generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields("number", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void monthCardLatTest() { // месяц карты латиницей
-        paymentGate.vc(generateValidRandomNumberCard(), "number", getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), "number", getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void yearCardLatTest() { // год карты латиницей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "number",
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), "number",
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void holderCardLatTest() { // владелец карты латиницей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "Petr Van", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void codeCardLatTest() { // код карты латиницей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), "number");
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void numberCardKirTest() { // номер карты кириллицей
-        paymentGate.vc("номер", generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields("номер", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void monthCardKirTest() { // месяц карты кириллицей
-        paymentGate.vc(generateValidRandomNumberCard(), "номер", getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), "номер", getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void yearCardKirTest() { // год карты кириллицей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "номер",
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), "номер",
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void holderCardKirTest() { // владелец карты кириллицей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "Петров Иван", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void codeCardKirTest() { // код карты кириллицей
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), "номер");
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void doubleSurnameHolderTest() { // двойная фамилия владельца карты
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "Петров-Смирнов Иван", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void registerHolderTest() { // регистр у владельца карты
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "петров Иван", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void apostropheHolderTest() { // апостроф у владельца карты
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "D'art An", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textSuccessfullySees();
     }
 
     @Test
     void numberHolderTest() { // цифры в поле владельца карты
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "123456789", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void symbolsNumberCardTest() { // символы в номере карты
-        paymentGate.vc("№*?;:", generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields("№*?;:", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void symbolsMonthCardTest() { // месяц карты символами
-        paymentGate.vc(generateValidRandomNumberCard(), "&*^", getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), "&*^", getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void symbolsYearCardTest() { // год карты символами
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), "*&",
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), "*&",
                 generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void symbolsHolderCardTest() { // владелец карты символами
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 "&#$^)*#  $&", generatorRandomCode());
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
     }
 
     @Test
     void symbolsCodeCardTest() { // код карты символами
-        paymentGate.vc(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
+        creditGate.fillSubstitutingValuesIntoFields(generateValidRandomNumberCard(), generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), "&^%&()");
-        paymentGate.loginButton.click();
-        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+        creditGate.loginButton.click();
+        creditGate.textIncorrectFormatSees();
+    }
+
+    @Test
+    void checkingTheStatusApprovedCreditGate() {
+        SQLHelper.getStatusApprovedCreditGate();
     }
     @Test
-    void TransactionId() {
-        SQLHelper.getTransactionId();
+    void checkingTheStatusDeclinedCreditGate() {
+        SQLHelper.getStatusDeclinedCreditGate();
     }
 
 
