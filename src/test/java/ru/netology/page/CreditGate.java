@@ -65,4 +65,8 @@ public class CreditGate {
     public void textIncorrectFormatSees() {
         $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
     }
+
+    public void WaitingForRequest() { // метод ожидания запроса
+        $(byText("Продолжить")).shouldBe(visible, Duration.ofSeconds(20));
+    }
 }

@@ -3,6 +3,11 @@ package ru.netology.page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
@@ -65,7 +70,11 @@ public class PaymentGate {
     }
 
 
-    public void textIncorrectFormatSees() {
+    public void textIncorrectFormatSees() { // метод видит текст "Неверный формат"
         $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+
+    public void WaitingForRequest() { // метод ожидания запроса
+        $(byText("Продолжить")).shouldBe(visible, Duration.ofSeconds(20));
     }
 }

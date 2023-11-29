@@ -24,6 +24,7 @@ public class SQLHelper {
     public static Connection getConn() {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
     }
+
     @SneakyThrows
     public static void cleanDatabase() {
         var connection = getConn();
@@ -41,6 +42,7 @@ public class SQLHelper {
         var actualStatus = runner.query(conn, codeSQL, new ScalarHandler<String>());     // runner выполняет подключение, передает код, возвращает строчное значение
         return actualStatus;
     }
+
     @SneakyThrows
     public static String getCreditStatus() {  // метод делает запрос в базу и возвращает результат
         var conn = getConn();                                                            // подключается

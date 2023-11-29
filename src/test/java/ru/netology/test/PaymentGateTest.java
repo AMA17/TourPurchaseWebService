@@ -1,12 +1,14 @@
 package ru.netology.test;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import ru.netology.data.SQLHelper;
 import ru.netology.page.PaymentGate;
+
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DataHelper.*;
-
 
 
 public class PaymentGateTest {
@@ -199,23 +201,24 @@ public class PaymentGateTest {
 
     @Test
     void checkingTheStatusApprovedPaymentGate() { // Проверка статуса "APPROVED" в PaymentGate
-        SQLHelper.cleanDatabase();
-        SQLHelper.getConn();
+        SQLHelper.cleanDatabase();                                       // очистка БД
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
-                generateRandomNameHolderCard(), generatorRandomCode());
-        paymentGate.loginButton.click();
-        var actualStatus = SQLHelper.getPaymentStatus();
-         assertEquals ("APPROVED", actualStatus);
+                generateRandomNameHolderCard(), generatorRandomCode());  // заполнение данных
+        paymentGate.loginButton.click();                                 // нажимает кнопку "Продолжить"
+        paymentGate.WaitingForRequest();                                 // ожидание выполнения действия
+        var actualStatus = SQLHelper.getPaymentStatus();                 // получение статуса из базы
+        assertEquals("APPROVED", actualStatus);                          // сравнение результата
     }
+
     @Test
     void checkingTheStatusDeclinedPaymentGate() { // Проверка статуса "DECLINED" в PaymentGate
         SQLHelper.cleanDatabase();
-        SQLHelper.getConn();
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         paymentGate.loginButton.click();
+        paymentGate.WaitingForRequest();
         var actualStatus = SQLHelper.getPaymentStatus();
-        assertEquals ("DECLINED", actualStatus);
+        assertEquals("DECLINED", actualStatus);
     }
 
 }
