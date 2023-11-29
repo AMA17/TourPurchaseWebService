@@ -7,6 +7,7 @@ import ru.netology.data.SQLHelper;
 import ru.netology.page.CreditGate;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DataHelper.*;
 
 
@@ -198,13 +199,25 @@ public class CreditGateTest {
     }
 
     @Test
-    void checkingTheStatusApprovedCreditGate() {
-        SQLHelper.getStatusApprovedCreditGate();
+    void checkingTheStatusApprovedCreditGate() { // Проверка статуса "APPROVED" в CreditGate
+        SQLHelper.cleanDatabase();
+        creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        creditGate.loginButton.click();
+        SQLHelper.getCreditStatus();
+        var actualStatus = SQLHelper.getCreditStatus();
+        assertEquals("APPROVED", actualStatus);
     }
+
+
     @Test
-    void checkingTheStatusDeclinedCreditGate() {
-        SQLHelper.getStatusDeclinedCreditGate();
+    void checkingTheStatusDeclinedCreditGate() { // Проверка статуса "DECLINED" в CreditGate
+        SQLHelper.cleanDatabase();
+        creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        creditGate.loginButton.click();
+        SQLHelper.getCreditStatus();
+        var actualStatus = SQLHelper.getCreditStatus();
+        assertEquals ("DECLINED", actualStatus);
     }
-
-
 }

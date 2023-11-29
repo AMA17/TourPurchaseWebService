@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.SQLHelper;
 import ru.netology.page.PaymentGate;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DataHelper.*;
 
 
@@ -198,12 +199,23 @@ public class PaymentGateTest {
 
     @Test
     void checkingTheStatusApprovedPaymentGate() { // Проверка статуса "APPROVED" в PaymentGate
-        SQLHelper.getStatusApprovedPaymentGate();
-
+        SQLHelper.cleanDatabase();
+        paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        SQLHelper.getPaymentStatus();
+        var actualStatus = SQLHelper.getPaymentStatus();
+         assertEquals ("APPROVED", actualStatus);
     }
     @Test
-    void checkingTheStatusDeclinedPaymentGate() {
-        SQLHelper.getStatusDeclinedPaymentGate();
+    void checkingTheStatusDeclinedPaymentGate() { // Проверка статуса "DECLINED" в PaymentGate
+        SQLHelper.cleanDatabase();
+        paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
+                generateRandomNameHolderCard(), generatorRandomCode());
+        paymentGate.loginButton.click();
+        SQLHelper.getPaymentStatus();
+        var actualStatus = SQLHelper.getPaymentStatus();
+        assertEquals ("DECLINED", actualStatus);
     }
 
 }

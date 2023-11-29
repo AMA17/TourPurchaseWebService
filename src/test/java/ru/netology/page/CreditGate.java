@@ -1,11 +1,13 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
 import java.time.LocalDate;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -20,6 +22,7 @@ public class CreditGate {
     private final SelenideElement codeField = $(byText("CVC/CVV")).parent().$("input");
     public final SelenideElement loginButton = $(byText("Продолжить"));
     private final SelenideElement buy = $(byText("Купить в кредит"));
+
 
     public void fillFormWithValidData() { // метод заполнения валидных данных
         buy.click();          // инициализировал поля и заполнил данными
