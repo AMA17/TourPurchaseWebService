@@ -205,7 +205,6 @@ public class CreditGateTest {
         creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         creditGate.loginButton.click();
-        SQLHelper.getCreditStatus();
         var actualStatus = SQLHelper.getCreditStatus();
         assertEquals("APPROVED", actualStatus);
     }
@@ -218,7 +217,6 @@ public class CreditGateTest {
         creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         creditGate.loginButton.click();
-        SQLHelper.getCreditStatus();
         var actualStatus = SQLHelper.getCreditStatus();
         assertEquals ("DECLINED", actualStatus);
     }

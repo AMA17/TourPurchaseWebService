@@ -204,7 +204,6 @@ public class PaymentGateTest {
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         paymentGate.loginButton.click();
-        SQLHelper.getPaymentStatus();
         var actualStatus = SQLHelper.getPaymentStatus();
          assertEquals ("APPROVED", actualStatus);
     }
@@ -215,7 +214,6 @@ public class PaymentGateTest {
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         paymentGate.loginButton.click();
-        SQLHelper.getPaymentStatus();
         var actualStatus = SQLHelper.getPaymentStatus();
         assertEquals ("DECLINED", actualStatus);
     }
