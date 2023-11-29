@@ -60,4 +60,12 @@ public class PaymentGate {
         loginButton.click();
     }
 
+    public void textSuccessfullySees() {  // метод видит текст "Успешно"
+        $(byText("Успешно")).shouldBe(visible, Duration.ofSeconds(10));
+    }
+
+
+    public void textIncorrectFormatSees() {
+        $(byText("Неверный формат")).shouldBe(visible, Duration.ofSeconds(10));
+    }
 }
