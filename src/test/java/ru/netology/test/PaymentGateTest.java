@@ -200,6 +200,7 @@ public class PaymentGateTest {
     @Test
     void checkingTheStatusApprovedPaymentGate() { // Проверка статуса "APPROVED" в PaymentGate
         SQLHelper.cleanDatabase();
+        SQLHelper.getConn();
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         paymentGate.loginButton.click();
@@ -210,6 +211,7 @@ public class PaymentGateTest {
     @Test
     void checkingTheStatusDeclinedPaymentGate() { // Проверка статуса "DECLINED" в PaymentGate
         SQLHelper.cleanDatabase();
+        SQLHelper.getConn();
         paymentGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         paymentGate.loginButton.click();

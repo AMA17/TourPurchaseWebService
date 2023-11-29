@@ -201,6 +201,7 @@ public class CreditGateTest {
     @Test
     void checkingTheStatusApprovedCreditGate() { // Проверка статуса "APPROVED" в CreditGate
         SQLHelper.cleanDatabase();
+        SQLHelper.getConn();
         creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4441", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         creditGate.loginButton.click();
@@ -213,6 +214,7 @@ public class CreditGateTest {
     @Test
     void checkingTheStatusDeclinedCreditGate() { // Проверка статуса "DECLINED" в CreditGate
         SQLHelper.cleanDatabase();
+        SQLHelper.getConn();
         creditGate.fillSubstitutingValuesIntoFields("4444 4444 4444 4442", generateRandomMonth(), getCurrentDatePlusOneYear(),
                 generateRandomNameHolderCard(), generatorRandomCode());
         creditGate.loginButton.click();

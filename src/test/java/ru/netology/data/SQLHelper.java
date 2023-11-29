@@ -3,11 +3,14 @@ package ru.netology.data;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import ru.netology.page.PaymentGate;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import static com.codeborne.selenide.Selenide.$;
+import static ru.netology.data.DataHelper.*;
+import static ru.netology.data.DataHelper.generatorRandomCode;
 
 public class SQLHelper {
 
@@ -45,4 +48,5 @@ public class SQLHelper {
         var actualStatus = runner.query(conn, codeSQL, new ScalarHandler<String>());     // runner выполняет подключение, передает код, возвращает строчное значение
         return actualStatus;
     }
+
 }
